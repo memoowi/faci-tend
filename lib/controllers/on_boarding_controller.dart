@@ -43,7 +43,7 @@ class OnBoardingController extends GetxController {
     final appData = GetStorage();
     appData.write('isFirstTime', false);
 
-    Get.offAllNamed(AppRouter.home);
+    Get.offAllNamed(AppRouter.login);
   }
 
   @override
