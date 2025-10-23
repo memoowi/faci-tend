@@ -10,7 +10,7 @@ class AppRouter {
   static const String register = '/register';
   static const String home = '/';
 
-  static const String initialRoute = home;
+  static const String initialRoute = onBoarding;
 
   static final List<GetPage> routes = [
     GetPage(name: home, page: () => HomePage()),
