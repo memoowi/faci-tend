@@ -118,4 +118,14 @@ flutter run
       ```bash
       dart run flutter_launcher_icons -f flutter_launcher_icons.yaml
       ```
-
+2. **Cuztomizing on Native Splash Screen**
+   - Configuration is in `flutter_native_splash.yaml`
+   - Check for the rules and available params in the package docs in [https://pub.dev/packages/flutter_native_splash](https://pub.dev/packages/flutter_native_splash)
+   - Run the package to generate your configured native splash screen 
+   ```bash
+   dart run flutter_native_splash:create -p flutter_native_splash.yaml
+   ```
+   - To restore Flutter's default white splash screen, run the following command in the terminal:
+   ```bash
+   dart run flutter_native_splash:remove -p flutter_native_splash.yaml
+   ```
