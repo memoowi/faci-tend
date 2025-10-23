@@ -107,7 +107,7 @@ flutter_native_splash:
   # The screen orientation can be set in Android with the android_screen_orientation parameter.
   # Valid parameters can be found here:
   # https://developer.android.com/guide/topics/manifest/activity-element#screen
-  #android_screen_orientation: portrait
+  android_screen_orientation: portrait
 
   # hide notif bar on android. ios already hides it by default. 
   # Has no effect in web since web has no notification bar.
