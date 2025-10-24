@@ -3,6 +3,7 @@ import 'package:faci_tend/utils/helper.dart';
 import 'package:faci_tend/widgets/theme_toggle.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 
 class RegisterPage extends StatelessWidget {
@@ -23,7 +24,7 @@ class RegisterPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Welcome to FaciTend!',
+                'Welcome to ${dotenv.get("APP_NAME")}!',
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),

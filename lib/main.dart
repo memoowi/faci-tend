@@ -33,7 +33,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () => GetMaterialApp(
-        title: 'FaciTend',
+        title: dotenv.get("APP_NAME"),
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
         themeMode: themeController.themeMode,
