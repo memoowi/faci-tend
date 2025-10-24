@@ -1,8 +1,11 @@
 import 'package:faci_tend/core/routes.dart';
+import 'package:faci_tend/firebase_options.dart';
 import 'package:faci_tend/themes/app_theme.dart';
 import 'package:faci_tend/themes/theme_controller.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -14,6 +17,8 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+  await dotenv.load(fileName: ".env");
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await GetStorage.init();
   Get.put(ThemeController(), permanent: true);
   runApp(MainApp());
