@@ -1,3 +1,4 @@
+import 'package:faci_tend/bindings/app_binding.dart';
 import 'package:faci_tend/core/routes.dart';
 import 'package:faci_tend/firebase_options.dart';
 import 'package:faci_tend/themes/app_theme.dart';
@@ -20,6 +21,7 @@ void main() async {
   await dotenv.load(fileName: ".env");
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await GetStorage.init();
+  // Needed to init right away
   Get.put(ThemeController(), permanent: true);
   runApp(MainApp());
 }
@@ -33,6 +35,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () => GetMaterialApp(
+        initialBinding: AppBinding(),
         title: dotenv.get("APP_NAME"),
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
