@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faci_tend/core/routes.dart';
+import 'package:faci_tend/models/attendance_model.dart';
 import 'package:faci_tend/models/user_model.dart';
 import 'package:faci_tend/utils/helper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -134,13 +135,17 @@ class UserService extends GetxService {
     final uid = firebaseUser.value!.uid;
 
     try {
-      await _firestore.collection('attendance').add({
-        'userId': uid,
-        'timestamp': FieldValue.serverTimestamp(),
-        'type': 'clock_in', // You can expand this for clock-out logic
-        'location': GeoPoint(position.latitude, position.longitude),
-        'distanceToTargetMeters': distance,
-      });
+      await _firestore
+          .collection('attendance')
+          .add(
+            AttendanceModel(
+              userId: uid,
+              timestamp: FieldValue.serverTimestamp(),
+              type: 'clock_in', // You can expand this for clock-out logic
+              location: GeoPoint(position.latitude, position.longitude),
+              distanceToTargetMeters: distance,
+            ).toMap(),
+          );
 
       Get.snackbar(
         'Success! 🎉',
