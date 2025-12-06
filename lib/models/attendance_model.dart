@@ -5,7 +5,8 @@ class AttendanceModel {
   final String type;
   final GeoPoint location;
   final double distanceToTargetMeters;
-  final FieldValue timestamp;
+  final Timestamp timestamp;
+  final String? id;
 
   AttendanceModel({
     required this.userId,
@@ -13,6 +14,7 @@ class AttendanceModel {
     required this.location,
     required this.distanceToTargetMeters,
     required this.timestamp,
+    this.id,
   });
 
   Map<String, dynamic> toMap() {
@@ -27,6 +29,7 @@ class AttendanceModel {
 
   factory AttendanceModel.fromMap(Map<String, dynamic> map) {
     return AttendanceModel(
+      id: map['id'] as String?,
       userId: map['userId'] ?? '',
       type: map['type'] ?? '',
       location: map['location'] ?? GeoPoint(0, 0),

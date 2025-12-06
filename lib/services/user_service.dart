@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faci_tend/core/routes.dart';
 import 'package:faci_tend/models/attendance_model.dart';
@@ -140,7 +142,7 @@ class UserService extends GetxService {
           .add(
             AttendanceModel(
               userId: uid,
-              timestamp: FieldValue.serverTimestamp(),
+              timestamp: Timestamp.now(),
               type: 'clock_in', // You can expand this for clock-out logic
               location: GeoPoint(position.latitude, position.longitude),
               distanceToTargetMeters: distance,
@@ -154,6 +156,31 @@ class UserService extends GetxService {
       );
     } catch (e) {
       Helper.showError('Failed to save attendance record: $e');
+    }
+  }
+
+  Future<List<AttendanceModel>> loadAttendances() async {
+    final uid = firebaseUser.value!.uid;
+
+    try {
+      final querySnapshot = await _firestore
+          .collection('attendance')
+          .where('userId', isEqualTo: uid)
+          .orderBy('timestamp', descending: true)
+          .get();
+
+      final attendanceList = querySnapshot.docs.map((doc) {
+        final data = doc.data();
+        data['id'] = doc.id; // Add the document ID
+
+        return AttendanceModel.fromMap(data);
+      }).toList();
+
+      return attendanceList;
+    } catch (e) {
+      Helper.showError('Failed to load attendance records: $e');
+      log('Failed to load attendance records: $e');
+      return [];
     }
   }
 }
