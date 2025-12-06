@@ -1,4 +1,6 @@
+import 'dart:developer';
 import 'dart:io';
+import 'dart:math' hide log;
 import 'dart:typed_data';
 import 'package:flutter/services.dart';
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
@@ -112,5 +114,41 @@ class FaceRecognitionService {
     return embeddingList;
 
     // --- END: NEW FIX ---
+  }
+
+  // NEWW
+  // Define the maximum distance allowed for a match (e.g., 1.0 or less)
+  static const double recognitionThreshold = 1.0;
+
+  /// Calculates the Euclidean distance between two face embeddings.
+  double calculateDistance(List<double> embedding1, List<double> embedding2) {
+    if (embedding1.length != embedding2.length) {
+      throw Exception('Embeddings must have the same dimension.');
+    }
+
+    double sumOfSquares = 0.0;
+    for (int i = 0; i < embedding1.length; i++) {
+      double difference = embedding1[i] - embedding2[i];
+      sumOfSquares += difference * difference;
+    }
+
+    // Euclidean distance is the square root of the sum of squares
+    return sqrt(sumOfSquares);
+  }
+
+  /// Compares a new embedding against the user's saved embedding.
+  bool compareFaces(List<double> newEmbedding, List<double>? savedEmbedding) {
+    if (savedEmbedding == null || savedEmbedding.isEmpty) {
+      // User hasn't enrolled yet
+      return false;
+    }
+
+    final distance = calculateDistance(newEmbedding, savedEmbedding);
+
+    // Log the distance for debugging
+    log('Face Distance: $distance');
+
+    // Return true if the distance is within the allowed threshold
+    return distance <= recognitionThreshold;
   }
 }

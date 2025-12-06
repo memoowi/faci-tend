@@ -1,4 +1,5 @@
 import 'package:faci_tend/bindings/auth_binding.dart';
+import 'package:faci_tend/pages/attendance_page.dart';
 import 'package:faci_tend/pages/face_enroll_page.dart';
 import 'package:faci_tend/pages/home_page.dart';
 import 'package:faci_tend/pages/login_page.dart';
@@ -14,6 +15,7 @@ class AppRouter {
   static const String register = '/register';
   static const String home = '/home';
   static const String faceEnroll = '/faceEnroll';
+  static const String takeAttendance = '/takeAttendance';
 
   static const String initialRoute = start;
 
@@ -24,5 +26,6 @@ class AppRouter {
     GetPage(name: login, page: () => LoginPage(), binding: AuthBinding()),
     GetPage(name: register, page: () => RegisterPage(), binding: AuthBinding()),
     GetPage(name: faceEnroll, page: () => FaceEnrollPage()),
+    GetPage(name: takeAttendance, page: () => AttendancePage()),
   ];
 }

@@ -3,6 +3,7 @@ import 'package:faci_tend/core/routes.dart';
 import 'package:faci_tend/models/user_model.dart';
 import 'package:faci_tend/utils/helper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -121,6 +122,33 @@ class UserService extends GetxService {
       Get.offAllNamed(AppRouter.home);
     } catch (e) {
       Get.snackbar('Error', 'Could not save face data: $e');
+    }
+  }
+
+  Future<void> recordAttendance(Position position, double distance) async {
+    if (firebaseUser.value == null) {
+      Get.snackbar('Error', 'You are not logged in.');
+      return;
+    }
+
+    final uid = firebaseUser.value!.uid;
+
+    try {
+      await _firestore.collection('attendance').add({
+        'userId': uid,
+        'timestamp': FieldValue.serverTimestamp(),
+        'type': 'clock_in', // You can expand this for clock-out logic
+        'location': GeoPoint(position.latitude, position.longitude),
+        'distanceToTargetMeters': distance,
+      });
+
+      Get.snackbar(
+        'Success! 🎉',
+        'You have successfully clocked in.',
+        snackPosition: SnackPosition.TOP,
+      );
+    } catch (e) {
+      Helper.showError('Failed to save attendance record: $e');
     }
   }
 }
