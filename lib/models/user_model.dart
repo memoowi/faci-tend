@@ -6,8 +6,8 @@ class UserModel {
   final String displayName;
   final String role;
   final Timestamp createdAt;
-  // gonna use later bruh
-  final String? faceEmbeddingUrl;
+  final List<dynamic>? faceEmbedding;
+  final String? faceImageUrl;
 
   UserModel({
     required this.uid,
@@ -15,7 +15,8 @@ class UserModel {
     required this.displayName,
     this.role = 'basic',
     required this.createdAt,
-    this.faceEmbeddingUrl,
+    this.faceEmbedding,
+    this.faceImageUrl,
   });
 
   Map<String, dynamic> toJson() {
@@ -25,7 +26,8 @@ class UserModel {
       'displayName': displayName,
       'role': role,
       'createdAt': createdAt,
-      'faceEmbeddingUrl': faceEmbeddingUrl,
+      'faceEmbedding': faceEmbedding,
+      'faceImageUrl': faceImageUrl,
     };
   }
 
@@ -36,7 +38,10 @@ class UserModel {
       displayName: map['displayName'] ?? '',
       role: map['role'] ?? 'basic',
       createdAt: map['createdAt'] ?? Timestamp.now(),
-      faceEmbeddingUrl: map['faceEmbeddingUrl'],
+      faceEmbedding: map['faceEmbedding'] != null
+          ? List<dynamic>.from(map['faceEmbedding'])
+          : null,
+      faceImageUrl: map['faceImageUrl'],
     );
   }
 }

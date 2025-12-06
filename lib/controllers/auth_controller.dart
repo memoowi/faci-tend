@@ -48,7 +48,7 @@ class AuthController extends GetxController {
         password: passwordController.text.trim(),
       );
 
-      _clearControllers();
+      // _clearControllers();
       Get.offAllNamed(AppRouter.home);
     } on FirebaseAuthException catch (e) {
       Helper.showError(e.message ?? 'Login failed');
@@ -77,7 +77,7 @@ class AuthController extends GetxController {
         );
       }
 
-      _clearControllers();
+      // _clearControllers();
       Get.offAllNamed(AppRouter.faceEnroll);
     } on FirebaseAuthException catch (e) {
       Helper.showError(e.message ?? 'Registration failed');
@@ -99,10 +99,10 @@ class AuthController extends GetxController {
     await _firestore.collection('users').doc(user.uid).set(newUser.toJson());
   }
 
-  void _clearControllers() {
-    emailController.clear();
-    passwordController.clear();
-    nameController.clear();
-    confirmPasswordController.clear();
-  }
+  // void _clearControllers() {
+  //   emailController.clear();
+  //   passwordController.clear();
+  //   nameController.clear();
+  //   confirmPasswordController.clear();
+  // }
 }
